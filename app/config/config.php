@@ -1,8 +1,20 @@
 <?php
 
-define('DB_HOST', 'localhost');
-define('DB_USER', 'rra1968-2209a-p4');
-define('DB_PASS', 'WkNq@TEDbNnOFa_v');
-define('DB_NAME', 'Mvc-2209c-P4');
+// define('DB_HOST', 'localhost');
+// define('DB_USER', 'root');
+// define('DB_PASS', '');
+// define('DB_NAME', 'mvc2209cp4');
 
-define('URLROOT', 'http://mvc-2209c-p4.org');
+
+define('DB_HOST', 'localhost');
+define('DB_USER', 'root');
+define('DB_PASS', '');
+define('DB_NAME', 'mvc2209cp4');
+
+define('APPROOT', dirname(dirname(__FILE__))) ;
+
+// Zet hier je virtualhostnaam. Let op dat er http:// voor staat anders werkt het niet
+define('URLROOT', 'http://p4.origineel-beckend-mvc-huiswerk1.com');
+
+define('SITENAME', 'MVC Framework reference');
+?>
