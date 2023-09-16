@@ -1,5 +1,11 @@
-<?php require APPROOT . '/views/include/head.php'; ?>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <title>Document</title>
+</head>
 <body>
     
 
@@ -7,7 +13,7 @@
 <h5>Datum in dienst: <?= $data   ['DatumInDienst'];  ?></h5>
 <h5>AantalSterren: <?= $data   ['AantalSterren'];  ?></h5>
 
-<button class="toevoegen-button"><a href="./Toevoegenvoertuig.php">Toevoegen Voertuig</a></button><br>
+<button class="toevoegen-button"><a href="<?php echo URLROOT?>instructeur/toevoegenvoertuig/<?php echo $data["InstructeurId"] ?>">Toevoegen Voertuig</a></button><br>
 
 <br>
 <table border= "1">
@@ -18,6 +24,8 @@
         <th>Bouwjaar</th>
         <th>Brandstof</th>
         <th>Rijbewijscategorie</th>
+        <th>Wijzigen</th>
+
 
     </thead>
     <tbody>

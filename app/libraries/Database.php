@@ -34,5 +34,51 @@ class Database
         return $this->statement->fetchAll(PDO::FETCH_OBJ);
     }
 
+    public function single() {
+
+        $this->statement->execute();
+
+        return $this->statement->fetch(PDO::FETCH_OBJ);
+
+    }
+ 
+
+    public function bind($parameter, $value, $type = null)
+
+    {
+
+        if (is_null($type)) {
+
+            switch($value) {
+
+                case is_int($value):
+
+                    $type = PDO::PARAM_INT;
+
+                    break;
+
+                case is_bool($value):
+
+                    $type = PDO::PARAM_BOOL;
+
+                    break;
+
+                case is_null($value):
+
+                    $type = PDO::PARAM_NULL;
+
+                    break;
+
+                default:
+
+                    $type = PDO::PARAM_STR;
+
+            }
+
+        }        
+
+        $this->statement->bindValue($parameter, $value, $type);
+
+    }
 
 }

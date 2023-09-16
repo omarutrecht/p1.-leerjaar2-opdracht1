@@ -54,6 +54,7 @@ class Instructeur extends BaseController
         $InstructeurId2 = $this->InstructeurModel->getInstructeurinfo($InstructeurId);
 
      //var_dump($InstructeurId1);
+     var_dump($InstructeurId2);
 
      $rows = "";
      foreach ($InstructeurId1 as $value) {
@@ -64,6 +65,8 @@ class Instructeur extends BaseController
                     <td>$value->Bouwjaar</td>
                     <td>$value->Brandstof</td>
                     <td>$value->Rijbewijscategorie</td>
+                    <td><a href='/Instructeur/update/$value->voertuigid'><img src='https://www.freeiconspng.com/thumbs/car-icon-png/car-icon-png-25.png' width = '40px'></a></td>
+
                     </tr>
                   </tr>";
       }
@@ -71,11 +74,13 @@ class Instructeur extends BaseController
                     'titl' => 'Instructeurs in dienst:
                                         ',
                                         'Amountofinstructeurs' => sizeof($InstructeurId1),
-                    'VoorNaam' =>$InstructeurId2 -> Voornaam,
+                    'VoorNaam' =>$InstructeurId2->Voornaam,
                     'Tussenvoegsel' =>$InstructeurId2 -> Tussenvoegsel,
                     'Achternaam' =>$InstructeurId2 -> Achternaam,
                     'DatumInDienst' =>$InstructeurId2 -> DatumInDienst,
                     'AantalSterren' =>$InstructeurId2 -> AantalSterren,
+                    
+                    'InstructeurId' =>$InstructeurId,
 
                     
                                                      
@@ -89,52 +94,88 @@ class Instructeur extends BaseController
 
             }
     
-            public function Toevoegenvoertuig($InstructeurId)
-            {
-            
-                $InstructeurId1 = $this->InstructeurModel->getInstructeurId($InstructeurId);
-                $InstructeurId2 = $this->InstructeurModel->getInstructeurinfo($InstructeurId);
-        
-             //var_dump($InstructeurId1);
-        
-             $rows = "";
-             foreach ($InstructeurId1 as $value) {
-                $rows .= "<tr>
-                            <td>$value->TypeVoertuig</td>
-                            <td>$value->Type</td>
-                            <td>$value->Kenteken</td>
-                            <td>$value->Bouwjaar</td>
-                            <td>$value->Brandstof</td>
-                            <td>$value->Rijbewijscategorie</td>
-                            </tr>
-                          </tr>";
-              }
-                          $data = [
-                            'titl' => 'Instructeurs in dienst:
-                                                ',
-                                                'Amountofinstructeurs' => sizeof($InstructeurId1),
-                            'VoorNaam' =>$InstructeurId2 -> Voornaam,
-                            'Tussenvoegsel' =>$InstructeurId2 -> Tussenvoegsel,
-                            'Achternaam' =>$InstructeurId2 -> Achternaam,
-                            'DatumInDienst' =>$InstructeurId2 -> DatumInDienst,
-                            'AantalSterren' =>$InstructeurId2 -> AantalSterren,
-        
-                            
-                                                             
-                                                       
-                            'rows' =>$rows
+          
+
+
+                    public function update($voertuigid)
+                    {
+
+                        // $InstructeurId1 = $this->InstructeurModel->getInstructeurId($InstructeurId);
+                        // $InstructeurId2 = $this->InstructeurModel->getInstructeurinfo($InstructeurId);
+                        $selectauto = $this->InstructeurModel->selectauto($voertuigid);
+                        var_dump($selectauto);
+                        
+                
+                     //var_dump($InstructeurId1);
+                
+                    
+                                  $data = [
+                                    'titl' => 'Instructeurs in dienst:',
+                                    'TypeVoertuig' => $selectauto ->TypeVoertuig,
+                                    'Type' => $selectauto ->Type,
+                                    'bouwjaar' => $selectauto ->Bouwjaar,
+                                    'Kenteken' => $selectauto ->Kenteken,
+                                    'Brandstof' => $selectauto ->Brandstof,
+
+
+
+
+                                                        
+                                                              
                         ];
+                        $this->view('Instructeur/update',$data);
+                }
+
+
+                public function toevoegenvoertuig($InstructeurId)
+                {
                 
-                
-                        $this->view('Instructeur/Gebruiktevoertuigen',$data);
-                       // $this->view('Instructeur/Toevoegenvoertuig',$data);
-        
-                    }
+                    $InstructeurId1 = $this->InstructeurModel->getInstructeurId($InstructeurId);
+                    $InstructeurId2 = $this->InstructeurModel->getInstructeurinfo($InstructeurId);
+                    $nietGebruiktVoertuig = $this->InstructeurModel->nietGebruiktVoertuig($InstructeurId);
+                    
             
+                 //var_dump($InstructeurId1);
+            
+                 $rows = "";
+                 foreach ($nietGebruiktVoertuig as $value) {
+                    $rows .= "<tr>
+                                <td>$value->TypeVoertuig</td>
+                                <td>$value->Type</td>
+                                <td>$value->Kenteken</td>
+                                <td>$value->Bouwjaar</td>
+                                <td>$value->Brandstof</td>
+                                <td>$value->Rijbewijscategorie</td>
+                             
+    
+                              
+                                </tr>
+                              </tr>";
+                  }
+                              $data = [
+                                'titl' => 'Instructeurs in dienst:
+                                                    ',
+                                                    'Amountofinstructeurs' => sizeof($InstructeurId1),
+                                'VoorNaam' =>$InstructeurId2 -> Voornaam,
+                                'Tussenvoegsel' =>$InstructeurId2 -> Tussenvoegsel,
+                                'Achternaam' =>$InstructeurId2 -> Achternaam,
+                                'DatumInDienst' =>$InstructeurId2 -> DatumInDienst,
+                                'AantalSterren' =>$InstructeurId2 -> AantalSterren,
+            
+                                
+                                                                 
+                                                           
+                                'rows' =>$rows
+                            ];
+                    
+                    
+                            $this->view('Instructeur/toevoegenvoertuig',$data);
+                           // $this->view('Instructeur/Toevoegenvoertuig',$data);
+            
+                        }
+            }
 
-
-
-
+            
 
 
 
@@ -159,4 +200,3 @@ class Instructeur extends BaseController
     // }
 
 
-}
